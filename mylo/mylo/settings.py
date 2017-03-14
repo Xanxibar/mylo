@@ -25,7 +25,7 @@ SECRET_KEY = 'bhtw4-2o#-4men9jgxo($3x%bt(@sig9f_!x_1m*oq-#+fz_g2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.mildzf.com']
 
 
 # Application definition
@@ -37,9 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_hosts',
+    'analytics',
+    'shorturl',
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -47,9 +51,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'mylo.urls'
+ROOT_HOSTCONF = 'mylo.hosts'
+DEFAULT_HOST = 'www'
+DEFAULT_REDIRECT_URL = "www.mildzf.com:8000"
+PARENT_HOST = "mildzf.com"
 
 TEMPLATES = [
     {

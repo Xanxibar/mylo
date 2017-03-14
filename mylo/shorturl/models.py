@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 
+from django_hosts.resolvers import reverse
 from .utils import create_shortcode
 from .validators import validate_url
 
@@ -35,10 +36,10 @@ class MyURL(models.Model):
         return str(self.url)
 
     def get_short_url(self):
-        pass
+        return reverse('scode', kwargs={'shortcode':self.shortcode}, host="www", scheme="http", port='8000')
 
     def save(self, *args, **kwargs):
         if self.shortcode is None or self.shortcode == "":
             self.shortcode = create_shortcode(self)
-        super(MyUrl, self).save(*args, **kwargs)
+        super(MyURL, self).save(*args, **kwargs)
 

@@ -27,7 +27,7 @@ class HomeView(View):
         }       
         if form.is_valid():
             new_url = form.cleaned_data.get('url')
-            obj, created = KirrURL.objects.get_or_create(url=new_url)
+            obj, created = MyURL.objects.get_or_create(url=new_url)
             host = request.get_host()
             uri = request.build_absolute_uri()
             context = {
@@ -46,6 +46,6 @@ class HomeView(View):
 
 class URLRedirectView(View):
     def get(self, request, shortcode=None, *args, **kwargs):
-        obj = get_object_or_404(KirrURL, shortcode=shortcode)
+        obj = get_object_or_404(MyURL, shortcode=shortcode)
         ClickEvent.objects.create_event(obj)
         return HttpResponseRedirect(obj.url)
