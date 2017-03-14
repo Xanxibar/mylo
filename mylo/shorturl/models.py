@@ -13,7 +13,7 @@ class MyUrlManager(models.Manager):
         return query_set.filter(active=True)
 
     def refresh_codes(self, items=None):
-        qs = KirrURL.objects.filter(pk__gte=1)
+        qs = MyURL.objects.filter(pk__gte=1)
         if items is not None and isinstance(items, int):
             qs = qs.order_by('-id')[:items]
         new_codes = 0
@@ -24,13 +24,13 @@ class MyUrlManager(models.Manager):
             new_codes += 1
         return "New codes created {i}".format(i=new_codes)
 
-class MyUrl(models.Model):
+class MyURL(models.Model):
     url = models.URLField(max_length=255, validators=[validate_url,])
     shortcode = models.CharField(max_length=SHORTCODE_MAX)
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     objects = MyUrlManager()
-    
+
     def __str__(self):
         return str(self.url)
 
